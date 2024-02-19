@@ -9,6 +9,27 @@
   <style type="text/css">
     /* Color scheme stolen from Sergey Karayev */
     
+  nav {
+          background-color: #333;
+          color: #fff;
+          padding: 10px 0;
+          text-align: center;
+      }
+      
+      nav a {
+          text-decoration: none;
+          color: #fff;
+          font-weight: bold;
+          padding: 10px 20px;
+          margin: 0 10px;
+          border-radius: 5px;
+          transition: background-color 0.3s ease;
+      }
+      
+      nav a:hover {
+          background-color: #555;
+      }
+
     a {
       color: #1772d0;
       text-decoration: none;
@@ -97,7 +118,16 @@
 </head>
 
 <body>
-  <table width="1000" border="0" align="center" cellspacing="0" cellpadding="0">
+  <!-- 目录栏 -->
+  <nav>
+    <a href="#section1">Bio</a>
+    <a href="#section2">Education</a>
+    <a href="#section3">Work Experience</a>
+    <a href="#section4">News</a>
+    <a href="#section5">Publications </a>
+    <a href="#section6">Services & Awards</a>
+  </nav>
+  <table width="1000" border="0" align="center" cellspacing="0" cellpadding="0" id="section1">
     <tr>
       <td>
         <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
@@ -143,7 +173,7 @@
 
         
         <!-- Education -->
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20" id="section2">
           <tbody><tr>
             <td width="100%" valign="middle">
               <heading>Education</heading>
@@ -190,7 +220,7 @@
           </tr>
           </tbody></table>
     
-          <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+          <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20" id="section3">
             <tbody><tr>
               <td width="100%" valign="middle">
               <heading>Work Experience</heading>
@@ -230,7 +260,7 @@
         </tr>
         </tbody></table>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20" id="section4">
           <tbody><tr>
             <td width="100%" valign="middle">
               <heading>News</heading>
@@ -361,7 +391,7 @@
 
       
         <!-- research -->
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20" id="section5">
           <tr>
             <td width="100%" valign="middle">
               <heading>Publications (*equal contribution)</heading>
@@ -495,7 +525,7 @@
         
         
                   <!-- honors and awards -->  
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20" id="section6">
           <tbody><tr>
             <td width="100%" valign="middle">
               <heading>Services & Awards</heading>
