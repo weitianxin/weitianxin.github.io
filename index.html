@@ -8,8 +8,52 @@
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> -->
   <style type="text/css">
     /* Color scheme stolen from Sergey Karayev */
-    
-  nav {
+
+    .button {
+    display: inline-block;
+    padding: 1px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+    border: 2px solid #1772d0;;
+    border-radius: 5px;
+    padding: 1px 10px;
+    font-size: 12px;
+    /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .button:hover {
+    background-color: #5a6092;
+  }
+  
+    .container {
+    display: flex; /* 使用flexbox布局 */
+    /* align-items: center;  */
+    /* vertical-align: top; */
+    }
+
+
+    .icon {
+      background-color: #bc85d3; /* 调整颜色以匹配准确的色调 */
+      color: white;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+      padding: 6px 15px; /* 调整适当的间距 */
+      border-radius: 10px; /* 这提供了药丸形状 */
+      text-align: center;
+      margin-right: 20px;
+      margin-left: 0px;
+      margin-top: 0px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+      height: 27px;
+}
+
+
+
+      nav {
           background-color: #333;
           color: #fff;
           padding: 10px 0;
@@ -270,7 +314,7 @@
                   <tr>
                     <th scope="row">Jan, 2024</th>
                     <td>
-                      One paper <a href="https://arxiv.org/abs/2311.09134">RIPOR</a> (Scalable and effective generative retrieval) accepted @ WWW’24.              
+                         One paper <a href="https://arxiv.org/abs/2311.09134">RIPOR</a> (Scalable and effective generative retrieval) accepted @ WWW’24.              
                     </td>
                   </tr> 
 
@@ -401,75 +445,85 @@
              
           </tr>
         </table>
-        <ul>
-          <li> <a href="https://openreview.net/forum?id=khAE1sTMdX"><strong>Towards Universal Multi-Modal Personalization: A Language Model Empowered Generative Paradigm</strong></a>
+
+        <!-- <div class="container">
+          <div class="icon">NeurIPS</div>
+          <div><a href="https://openreview.net/forum?id=khAE1sTMdX"><strong>Towards Universal Multi-Modal Personalization: A Language Model Empowered Generative Paradigm</strong></a>
             <p><u>Tianxin Wei</u>, Bowen Jin, Ruirui Li, Hansi Zeng, Zhengyang Wang, Jianhui Sun, Qingyu Yin, Hanqing Lu, Suhang Wang, Jingrui He, Xianfeng Tang</p>
             <p>In the ICLR 2024 (Full Research, AR: 31%). [<a href="TBD">Code</a>]</p>
+            <img src="images/tag-multimodal.png" width="9%"> <img src="images/tag-transferability.png" width="15%"></div>
+        </div> -->
+
+        <ul>
+          
+          <li> <a href="https://openreview.net/forum?id=khAE1sTMdX"><strong>Towards Universal Multi-Modal Personalization: A Language Model Empowered Generative Paradigm</strong></p></a>
+            <p><u>Tianxin Wei</u>, Bowen Jin, Ruirui Li, Hansi Zeng, Zhengyang Wang, Jianhui Sun, Qingyu Yin, Hanqing Lu, Suhang Wang, Jingrui He, Xianfeng Tang</p>
+            <p><em>ICLR 2024 (Full Research, AR: 31%).</em> <a href="TBD" class="button">Code</a></p>
             <img src="images/tag-multimodal.png" width="9%"> <img src="images/tag-transferability.png" width="15%">
 
           <li> <a href="https://arxiv.org/pdf/2311.09134.pdf"><strong>Scalable and Effective Generative Information Retrieval</strong></a>
             <p>Hansi Zeng, Chen Luo, Bowen Jin, Sheikh Muhammad Sarwar, <u>Tianxin Wei</u>, Hamed Zamani</p>
-            <p>In the WWW 2024 (Full Research, AR: 20.2%). [<a href="TBD">Code</a>]</p>
+            <p><em>WWW 2024 (Full Research, AR: 20.2%).</em> <a href="TBD" class="button">Code</a></p>
             <img src="images/tag-retrieval.png" width="13%">
 
           <li> <a href="TBD"><strong>TAU: Trajectory Data Augmentation with Uncertainty for Next POI Recommendation</strong></a>
                       <p>Zhuang Zhuang, <u>Tianxin Wei</u>, Lingbo Liu, Heng Qi, Yanming Shen, Baocai Yin</p>
-                      <p>In the AAAI 2024 (Full Research, AR: 24%). [<a href="TBD">Code</a>]</p>
+                      <p><em>AAAI 2024 (Full Research, AR: 24%).</em> <a href="TBD" class="button">Code</a></p>
                       <img src="images/tag-robustness.png" width="14.5%">      <img src="images/tag-application.png" width="11%">
 
           <li> <a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/c9e6ac15e689e06139d7b39e1667b165-Abstract-Conference.html"><strong>Meta-Learning with Neural Bandit Scheduler</strong></a>
                       <p>Yunzhe Qi, Yikun Ban, <u>Tianxin Wei</u>, Jiaru Zou, Huaxiu Yao, Jingrui He</p>
-                      <p>In the NeurIPS 2023 (Full Research, AR: 26.1%). [<a href="https://github.com/yunzhe0306/bandit_task_scheduler">Code</a>]</p>
+                      <p><em>NeurIPS 2023 (Full Research, AR: 26.1%).</em> <a href="https://github.com/yunzhe0306/bandit_task_scheduler" class="button">Code</a></p>
                       <img src="images/tag-sample_efficiency.png" width="12.5%">
 
           <li> <a href="https://arxiv.org/abs/2310.18816"><strong>Adaptive Test-Time Personalization for Federated Learning</strong></a>
                       <p>Wenxuan Bao*, <u>Tianxin Wei</u>*, Haohan Wang, Jingrui He</p>
-                      <p>In the NeurIPS 2023 (Full Research, AR: 26.1%). [<a href="https://github.com/baowenxuan/ATP">Code</a>]</p>
+                      <p><em>NeurIPS 2023 (Full Research, AR: 26.1%).</em> <a href="https://github.com/baowenxuan/ATP"  class="button">Code</a></p>
                       <img src="images/tag-robustness.png" width="14.5%">
 
           <li> <a href="https://arxiv.org/abs/2311.16334"><strong>Robust Basket Recommendation via Noise-tolerated Graph Contrastive Learning</strong></a>
                       <p>Xinrui He*, <u>Tianxin Wei</u>*, Jingrui He</p>
-                      <p>In the CIKM 2023 (Full Research, AR: 24.0%). [<a href="https://github.com/Xinrui17/BNCL">Code</a>]</p>
+                      <p><em>CIKM 2023 (Full Research, AR: 24.0%).</em> <a href="https://github.com/Xinrui17/BNCL" class="button">Code</a></p>
                       <img src="images/tag-robustness.png" width="14.5%">      <img src="images/tag-application.png" width="11%">
 
           <li> <a href="https://arxiv.org/abs/2307.08941"><strong>NTK-approximating MLP Fusion for Efficient Language Model Fine-tuning</strong></a>
                       <p><u>Tianxin Wei</u>*, Zeming Guo*, Yifan Chen*, Jingrui He</p>
-                      <p>In the ICML 2023 (Full Research, AR: 27.9%). [<a href="https://github.com/weitianxin/mlp_fusion">Code</a>]</p>
+                      <p><em>ICML 2023 (Full Research, AR: 27.9%).</em> <a href="https://github.com/weitianxin/mlp_fusion" class="button">Code</a></p>
                       <img src="images/tag-model_efficiency.png" width="12.5%">
 
           <li> <a href="https://arxiv.org/abs/2210.03801"><strong>Augmentations in Hypergraph Contrastive Learning: Fabricated and Generative</strong></a>
                       <p><u>Tianxin Wei</u>*, Yuning You*, Tianlong Chen, Yang Shen, Jingrui He, Zhangyang Wang</p>
-                      <p>In the NeurIPS 2022 (Full Research, AR: 25.6%). [<a href="https://github.com/weitianxin/HyperGCL">Code</a>][<a href="https://weitianxin.github.io/files/neurips22_hypergcl_appendix.pdf">Appendix</a>]</p>
+                      <p><em>NeurIPS 2022 (Full Research, AR: 25.6%).</em> <a href="https://github.com/weitianxin/HyperGCL" class="button">Code</a> <a href="https://weitianxin.github.io/files/neurips22_hypergcl_appendix.pdf" class="button">Appendix</a></p>
                       <img src="images/tag-robustness.png" width="14.5%">
 
           <li> <a href="https://arxiv.org/abs/2206.04789"><strong>Comprehensive Fair Meta-learned Recommender System</strong></a>
                       <p><u>Tianxin Wei</u>, Jingrui He</p>
-                      <p>In the KDD 2022 (Full Research, AR: 15.0%). [<a href="https://github.com/weitianxin/MACR">Code</a>]</p>
+                      <p><em>KDD 2022 (Full Research, AR: 15.0%).</em> <a href="https://github.com/weitianxin/MACR" class="button">Code</a></p>
                       <img src="images/tag-fairness.png" width="14.5%">
 
           <li> <a href="https://arxiv.org/abs/2010.15363"><strong>Model-Agnostic Counterfactual Reasoning for Eliminating Popularity Bias in Recommender System</strong></a>
                       <p><u>Tianxin Wei</u>, Fuli Feng, Jiawei Chen, Ziwei Wu, Jinfeng Yi, Xiangnan He</p>
-                      <p>In the KDD 2021 (Full Research, AR: 15.4%). [<a href="https://github.com/weitianxin/MACR">Code</a>]</p>
+                      <p><em>KDD 2021 (Full Research, AR: 15.4%).</em> <a href="https://github.com/weitianxin/MACR" class="button">Code</a></p>
                       <img src="images/tag-bias.png" width="14.5%"> 
 
           <li> <a href="https://arxiv.org/abs/2105.06067"><strong>Causal Intervention for Leveraging Popularity Bias in Recommendation</strong></a>
                       <p>Yang Zhang, Fuli Feng, Xiangnan He, <u>Tianxin Wei</u>, Chonggang Song, Guohui Ling and Yongdong Zhang</p>
-                      <p>In the SIGIR 2021 (Best Paper Honorable Mention, 1 out of All, Full Research, AR: 21%). [<a href="https://github.com/zyang1580/PDA">Code</a>]</p>
+                      <p><em>SIGIR 2021 (Best Paper Honorable Mention, 1 out of All, Full Research, AR: 21%).</em> <a href="https://github.com/zyang1580/PDA" class="button">Code</a></p>
                       <img src="images/tag-bias.png" width="14.5%">      <img src="images/tag-application.png" width="11%">
 
           <li> <a href="https://weitianxin.github.io/files/ICDM_2020_MetaCF.pdf"><strong>Fast Adaptation for Cold-start Collaborative Filtering with Meta-learning</strong></a>
                       <p><u>Tianxin Wei</u>, Ziwei Wu, Ruirui Li, Ziniu Hu, Fuli Feng, Xiangnan He, Yizhou Sun, and Wei Wang</p>
-                      <p>In the ICDM 2020 (Full Research, AR: 9.8%). [<a href="https://drive.google.com/file/d/1_UaPcCQLaEEWUCsMTRIgsvtWqorqsnUm/view?usp=sharing">Code</a>]</p>
+                      <p><em>ICDM 2020 (Full Research, AR: 9.8%).</em> <a href="https://drive.google.com/file/d/1_UaPcCQLaEEWUCsMTRIgsvtWqorqsnUm/view?usp=sharing" class="button">Code</a></p>
                       <img src="images/tag-transferability.png" width="15%">      <img src="images/tag-application.png" width="11%">
 
           <li> <a href="https://www.springerprofessional.de/en/unpaired-multimodal-neural-machine-translation-via-reinforcement/19040758"><strong>Unpaired Multimodal Neural Machine Translation via Reinforcement Learning</strong></a>
                       <p>Yijun Wang*, <u>Tianxin Wei</u>*, Qi Liu, Enhong Chen</p>
-                      <p>In the DASFAA 2021 (Full Research, AR: 20%).</p>
+                      <p><em>DASFAA 2021 (Full Research, AR: 20%).</em></p>
                       <img src="images/tag-multimodal.png" width="9%">
 
           <li> <a href="https://weitianxin.github.io/files/AAAI21_ARStock.pdf"><strong>AR-Stock: Deep Augmented Relational Stock Prediction</strong></a>
                       <p><u>Tianxin Wei</u>, Yuning You, Tianlong Chen</p>
-                      <p>In the AAAI 2021 Workshop on Knowledge Discovery from Unstructured Data (Oral). [<a href="https://github.com/weitianxin/FiAI_AR-Stock">Code</a>]</p>
+                      <p><em>AAAI 2021 Workshop on Knowledge Discovery from Unstructured Data (Oral).</em> <a href="https://github.com/weitianxin/FiAI_AR-Stock" class="button">Code</a></p>
                       <img src="images/tag-application.png" width="11%">
         </ul>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<strong>Journal</strong>
@@ -480,7 +534,7 @@
             <a href="http://sites.computer.org/debull/A23june/p80.pdf"><strong>Graph Contrastive Learning: An Odyssey towards Generalizable, Scalable and Principled Representation Learning on Graphs
             </strong></a>
                       <p>Yan Han, Yuning You, Wenqing Zheng, Scott Hoang, <u>Tianxin Wei</u>, Majdi Hassan, Tianlong Chen, Ying Ding, Yang Shen, Zhangyang Wang                      </p>
-                      <p>In the IEEE Data Engineering Bulletin.</p>
+                      <p><em>IEEE Data Engineering Bulletin.</em></p>
                       <img src="images/tag-survey.png" width="8.5%">
 
         </ul>
@@ -494,28 +548,28 @@
 
           <li>
             <a href="TBD"><strong>Parameter Compression for Large-scale Mixture-of-expert LLM</strong></a>
-            <p>preprint 2024. [<a href="TBD">Code</a>]</p>
+            <p><em>preprint 2024.</em> <a href="TBD" class="button">Code</a></p>
             <img src="images/tag-model_efficiency.png" width="12.5%">
           </li> 
 
           <li>
             <a href="TBD"><strong>Connecting Domains and Contrasting Samples: A Ladder for Domain Generalization</strong></a>
             <p><u>Tianxin Wei</u>*, Yifan Chen*, Xinrui He, Wenxuan Bao, Jingrui He</p>
-            <p>preprint 2023. [<a href="TBD">Code</a>]</p>
+            <p><em>preprint 2023.</em> <a href="TBD" class="button">Code</a></p>
             <img src="images/tag-robustness.png" width="14.5%">
         </li>
         
         <li>
             <a href="https://arxiv.org/pdf/2310.07815v1.pdf"><strong>Language Models as Semantic Indexers</strong></a>
             <p>Bowen Jin, Hansi Zeng, Guoyin Wang, Xiusi Chen, <u>Tianxin Wei</u>, Ruirui Li, Zhengyang Wang, Zheng Li, Yang Li, Hanqing Lu, Suhang Wang, Jiawei Han, Xianfeng Tang</p>
-            <p>preprint 2023. [<a href="TBD">Code</a>]</p>
+            <p><em>preprint 2023.</em> <a href="TBD" class="button">Code</a></p>
             <img src="images/tag-retrieval.png" width="13%">
         </li>
         
         <li>
             <a href="https://arxiv.org/abs/2201.13395"><strong>Neural Collaborative Filtering Bandits via Meta Learning</strong></a>
             <p>Yikun Ban, Yunzhe Qi, <u>Tianxin Wei</u>, Lihui Liu, Jingrui He</p>
-            <p>preprint 2022. [<a href="TBD">Code</a>]</p>
+            <p><em>preprint 2022.</em> <a href="TBD" class="button">Code</a></p>
             <img src="images/tag-sample_efficiency.png" width="12.5%">
         </li>        
 
