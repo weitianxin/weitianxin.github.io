@@ -475,6 +475,21 @@
       display: none;
     }
 
+    .pub-section-header {
+      list-style: none;
+      font-weight: 600;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: 12px;
+      padding: 28px 12px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pub-section-header.hidden {
+      display: none;
+    }
+
     .pub-insight {
       margin-top: 6px;
       font-size: 12.5px;
@@ -994,6 +1009,8 @@
 
     <ul class="pub-list" id="pubList">
 
+      <li class="pub-section-header">Preprint</li>
+
       <li class="pub-item" data-tags="agent survey">
         <a href="https://arxiv.org/abs/2601.12538" class="pub-title">Agentic Reasoning for Large Language Models: A Survey</a>
         <div class="pub-venue"><em>Survey 2026</em></div>
@@ -1042,7 +1059,10 @@
         </div>
         <div class="pub-tags"><span class="tag tag-agent">Agent</span><span class="tag tag-survey">Survey</span><span class="tag tag-personalization">Personalization</span></div>
       </li>
-<li class="pub-item" data-tags="llm efficiency multi-agent">
+
+      <li class="pub-section-header">Conference</li>
+
+      <li class="pub-item" data-tags="llm efficiency multi-agent">
         <a href="https://arxiv.org/abs/2601.06022" class="pub-title">AdaFuse: Adaptive Ensemble Decoding with Test-Time Scaling for LLMs</a>
         <div class="pub-venue"><em>ACL 2026 Main Conference</em></div>
         <div class="pub-authors">Chengming Cui*, <span class="me">Tianxin Wei*</span>, Ziyi Chen, Ruizhong Qiu, Zhichen Zeng, Zhining Liu, Xuying Ning, Duo Zhou, Jingrui He</div>
@@ -1449,11 +1469,14 @@
         </div>
         <div class="pub-tags"><span class="tag tag-application">Application</span></div>
       </li>
-<li class="pub-item" data-tags="diffusion robustness">
+
+      <li class="pub-section-header">Journal</li>
+
+      <li class="pub-item" data-tags="diffusion robustness">
         <a href="TBD" class="pub-title">DiffKGW: Stealthy and Robust Diffusion Model Watermarking</a>
         <div class="pub-venue"><em>TMLR</em></div>
         <div class="pub-authors"><span class="me">Tianxin Wei</span>, Ruizhong Qiu, Yifan Chen, Yunzhe Qi, Jiacheng Lin, Wenxuan Bao, Wenju Xu, Sreyashi Nag, Ruirui Li, Hanqing Lu, Zhengyang Wang, Chen Luo, Hui Liu, Suhang Wang, Jingrui He, Qi He, Xianfeng Tang</div>
-        <div class="pub-insight"><strong>Key Insight:</strong> Stealthy, robust watermarking for diffusion models via generation-time intervention.</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Stealthy robust watermarking for diffusion models via generation time intervention analogous to LLMs.</div>
         <div class="pub-links">
           <a href="TBD" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
           <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
@@ -1617,6 +1640,8 @@
     btn.innerHTML += `<span class="filter-count">(${count})</span>`;
   });
 
+  const sectionHeaders = document.querySelectorAll('.pub-section-header');
+
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
@@ -1627,6 +1652,14 @@
           item.classList.remove('hidden');
         } else {
           item.classList.add('hidden');
+        }
+      });
+      // Show section headers only when "All" is selected
+      sectionHeaders.forEach(h => {
+        if (filter === 'all') {
+          h.classList.remove('hidden');
+        } else {
+          h.classList.add('hidden');
         }
       });
     });
