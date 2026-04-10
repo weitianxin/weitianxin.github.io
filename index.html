@@ -264,15 +264,6 @@
       display: inline-block;
     }
 
-    .section-subtitle {
-      font-weight: 600;
-      color: var(--text);
-      margin: 28px 0 14px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      font-size: 12px;
-    }
-
     /* Education & Experience */
     .timeline {
       position: relative;
@@ -423,11 +414,52 @@
       padding: 0;
     }
 
+    .pub-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .filter-btn {
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      background: var(--bg);
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: inherit;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(44, 82, 130, 0.12);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 2px 8px rgba(44, 82, 130, 0.25);
+    }
+
+    .filter-count {
+      display: inline-block;
+      margin-left: 4px;
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
     .pub-item {
-      padding: 16px 12px;
+      padding: 18px 12px;
       border-bottom: 1px solid #f0f0f0;
       border-radius: 6px;
-      transition: background 0.2s ease, transform 0.2s ease;
+      transition: background 0.2s ease, transform 0.2s ease, opacity 0.3s ease;
     }
 
     .pub-item:last-child {
@@ -437,6 +469,28 @@
     .pub-item:hover {
       background: var(--bg-alt);
       transform: translateX(3px);
+    }
+
+    .pub-item.hidden {
+      display: none;
+    }
+
+    .pub-insight {
+      margin-top: 6px;
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: var(--text-light);
+      font-style: italic;
+      padding: 5px 10px;
+      background: linear-gradient(135deg, var(--accent-light), #f0f7ff);
+      border-left: 2px solid var(--accent);
+      border-radius: 0 4px 4px 0;
+    }
+
+    .pub-insight strong {
+      font-style: normal;
+      color: var(--accent);
+      font-weight: 600;
     }
 
     .pub-title {
@@ -493,12 +547,15 @@
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
+      margin-top: 8px;
     }
 
     .pub-link {
-      display: inline-block;
-      padding: 3px 12px;
-      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 10px;
+      font-size: 11px;
       font-weight: 500;
       color: var(--accent);
       border: 1.5px solid var(--accent);
@@ -518,7 +575,7 @@
       display: flex;
       gap: 4px;
       flex-wrap: wrap;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     .tag {
@@ -660,6 +717,8 @@
       .research-interests ul { grid-template-columns: 1fr; }
       .awards-grid { grid-template-columns: 1fr; }
       nav .nav-links a { margin-left: 14px; font-size: 12px; }
+      .pub-filter { gap: 6px; }
+      .filter-btn { padding: 5px 12px; font-size: 12px; }
     }
   </style>
 </head>
@@ -913,358 +972,527 @@
     <h2 class="section-title">Publications</h2>
     <p class="pub-note">* equal contribution &nbsp; ^ mentorship</p>
 
-    <div class="section-subtitle">Preprint</div>
+    <div class="pub-filter" id="pubFilter">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="agent">Agent</button>
+      <button class="filter-btn" data-filter="llm">LLM</button>
+      <button class="filter-btn" data-filter="personalization">Personalization</button>
+      <button class="filter-btn" data-filter="multimodal">Multimodal</button>
+      <button class="filter-btn" data-filter="robustness">Robustness</button>
+      <button class="filter-btn" data-filter="efficiency">Efficiency</button>
+      <button class="filter-btn" data-filter="retrieval">Retrieval</button>
+      <button class="filter-btn" data-filter="survey">Survey</button>
+      <button class="filter-btn" data-filter="test-time">Test-time</button>
+      <button class="filter-btn" data-filter="bias">Bias</button>
+      <button class="filter-btn" data-filter="safety">Safety</button>
+      <button class="filter-btn" data-filter="diffusion">Diffusion</button>
+      <button class="filter-btn" data-filter="fairness">Fairness</button>
+      <button class="filter-btn" data-filter="multi-agent">Multi-Agent</button>
+      <button class="filter-btn" data-filter="application">Application</button>
+      <button class="filter-btn" data-filter="transferability">Transferability</button>
+    </div>
 
-    <ul class="pub-list">
+    <ul class="pub-list" id="pubList">
 
-      <li class="pub-item">
+      <li class="pub-item" data-tags="agent survey">
         <a href="https://arxiv.org/abs/2601.12538" class="pub-title">Agentic Reasoning for Large Language Models: A Survey</a>
-        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Ting-Wei Li, Zhining Liu, Xuying Ning, Ze Yang, Jiaru Zou, Zhichen Zeng, Ruizhong Qiu, Xiao Lin, Dongqi Fu, Zihao Li, Mengting Ai, Duo Zhou, Wenxuan Bao, Yunzhe Li, Gaotang Li, Cheng Qian, Yu Wang, Xiangru Tang, Yin Xiao, Liri Fang, Hui Liu, Xianfeng Tang, Yuji Zhang, Chi Wang, Jiaxuan You, Heng Ji, Hanghang Tong, Jingrui He</div>
         <div class="pub-venue"><em>Survey 2026</em></div>
+        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Ting-Wei Li, Zhining Liu, Xuying Ning, Ze Yang, Jiaru Zou, Zhichen Zeng, Ruizhong Qiu, Xiao Lin, Dongqi Fu, Zihao Li, Mengting Ai, Duo Zhou, Wenxuan Bao, Yunzhe Li, Gaotang Li, Cheng Qian, Yu Wang, Xiangru Tang, Yin Xiao, Liri Fang, Hui Liu, Xianfeng Tang, Yuji Zhang, Chi Wang, Jiaxuan You, Heng Ji, Hanghang Tong, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Unified taxonomy of how LLM agents plan, use tools, and reflect to reason.</div>
         <div class="pub-links">
-          <a href="https://github.com/weitianxin/Awesome-Agentic-Reasoning" class="pub-link">Project</a>
-          <a href="https://huggingface.co/papers/2601.12538" class="pub-link">Huggingface</a>
+          <a href="https://arxiv.org/abs/2601.12538" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/weitianxin/Awesome-Agentic-Reasoning" class="pub-link"><i class="fas fa-project-diagram"></i> Project</a>
+          <a href="https://huggingface.co/papers/2601.12538" class="pub-link"><i class="fas fa-face-smile"></i> Huggingface</a>
         </div>
         <div class="pub-tags"><span class="tag tag-agent">Agent</span><span class="tag tag-survey">Survey</span></div>
       </li>
 
-      <li class="pub-item">
+      <li class="pub-item" data-tags="agent personalization">
         <a href="https://arxiv.org/abs/2511.20857" class="pub-title">Evo-Memory: Benchmarking LLM Agent Test-time Learning with Self-Evolving Memory</a>
-        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Noveen Sachdeva, Benjamin Coleman, Zhankui He, Yuarchen Bei, Xuying Ning, Mengting Ai, Yunzhe Li, Jingrui He, Ed H. Chi, Chi Wang, Shuo Chen, Fernando Pereira, Wang-Cheng Kang, Derek Zhiyuan Cheng</div>
         <div class="pub-venue"><em>arXiv 2025</em></div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
+        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Noveen Sachdeva, Benjamin Coleman, Zhankui He, Yuarchen Bei, Xuying Ning, Mengting Ai, Yunzhe Li, Jingrui He, Ed H. Chi, Chi Wang, Shuo Chen, Fernando Pereira, Wang-Cheng Kang, Derek Zhiyuan Cheng</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> LLM agents that autonomously build and refine memory from experience at test time.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2511.20857" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
         <div class="pub-tags"><span class="tag tag-agent">Agent</span><span class="tag tag-personalization">Personalization</span></div>
       </li>
 
-      <li class="pub-item">
+      <li class="pub-item" data-tags="llm personalization">
         <a href="https://www.arxiv.org/abs/2511.22707" class="pub-title">CoFiRec: Coarse-to-Fine Tokenization for Generative Recommendation</a>
-        <div class="pub-authors"><span class="me">Tianxin Wei*</span>, Xuying Ning*, Xuxing Chen, Ruizhong Qiu, Yupeng Hou, Yan Xie, Shuang Yang, Zhigang Hua, Jingrui He</div>
         <div class="pub-venue"><em>arXiv 2025</em></div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
+        <div class="pub-authors"><span class="me">Tianxin Wei*</span>, Xuying Ning*, Xuxing Chen, Ruizhong Qiu, Yupeng Hou, Yan Xie, Shuang Yang, Zhigang Hua, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Hierarchical tokenization bridging semantics and collaboration for generative recommendation.</div>
+        <div class="pub-links">
+          <a href="https://www.arxiv.org/abs/2511.22707" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
         <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-personalization">Personalization</span></div>
       </li>
 
-      <li class="pub-item">
+      <li class="pub-item" data-tags="agent survey personalization">
         <a href="https://arxiv.org/pdf/2602.06052" class="pub-title">Rethinking Memory Mechanisms of Foundation Agents in the Second Half: A Survey</a>
-        <div class="pub-authors">Joint work across 27 institutions.</div>
         <div class="pub-venue"><em>arXiv 2026</em></div>
-        <div class="pub-links"><a href="https://github.com/AgentMemoryWorld/Awesome-Agent-Memory" class="pub-link">Project</a></div>
+        <div class="pub-authors">Joint work across 27 institutions.</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Comprehensive categorization of agent memory mechanisms and key design gaps.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/pdf/2602.06052" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/AgentMemoryWorld/Awesome-Agent-Memory" class="pub-link"><i class="fas fa-project-diagram"></i> Project</a>
+        </div>
         <div class="pub-tags"><span class="tag tag-agent">Agent</span><span class="tag tag-survey">Survey</span><span class="tag tag-personalization">Personalization</span></div>
       </li>
-
-    </ul>
-
-    <div class="section-subtitle">Conference</div>
-
-    <ul class="pub-list">
-
-      <li class="pub-item">
+<li class="pub-item" data-tags="llm efficiency multi-agent">
         <a href="https://arxiv.org/abs/2601.06022" class="pub-title">AdaFuse: Adaptive Ensemble Decoding with Test-Time Scaling for LLMs</a>
-        <div class="pub-authors">Chengming Cui*, <span class="me">Tianxin Wei*</span>, Ziyi Chen, Ruizhong Qiu, Zhichen Zeng, Zhining Liu, Xuying Ning, Duo Zhou, Jingrui He</div>
         <div class="pub-venue"><em>ACL 2026 Main Conference</em></div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-efficiency">Efficiency</span></div>
+        <div class="pub-authors">Chengming Cui*, <span class="me">Tianxin Wei*</span>, Ziyi Chen, Ruizhong Qiu, Zhichen Zeng, Zhining Liu, Xuying Ning, Duo Zhou, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Fuse multiple LLM outputs adaptively at decode time via test-time scaling.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2601.06022" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-efficiency">Efficiency</span><span class="tag tag-multi-agent">Multi-Agent</span></div>
       </li>
 
-      <li class="pub-item">
+      <li class="pub-item" data-tags="agent multimodal">
         <a href="TBD" class="pub-title">PaperMind: Benchmarking Agentic Reasoning and Critique over Scientific Papers in Multimodal LLMs</a>
-        <div class="pub-authors">Yanjun Zhao*, <span class="me">Tianxin Wei*</span>, Jiaru Zou, Xuying Ning, Yuanchen Bei, Lingjie Chen, Simmi Rana, Wendy H. Yang, Hanghang Tong, Jingrui He</div>
         <div class="pub-venue"><em>ACL 2026 Findings</em></div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
+        <div class="pub-authors">Yanjun Zhao*, <span class="me">Tianxin Wei*</span>, Jiaru Zou, Xuying Ning, Yuanchen Bei, Lingjie Chen, Simmi Rana, Wendy H. Yang, Hanghang Tong, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Benchmark for evaluating multimodal LLM reasoning and critique over scientific papers.</div>
+        <div class="pub-links">
+          <a href="TBD" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
         <div class="pub-tags"><span class="tag tag-agent">Agent</span><span class="tag tag-multimodal">Multimodal</span></div>
       </li>
 
-      <li class="pub-item">
+      <li class="pub-item" data-tags="agent multimodal personalization">
         <a href="https://arxiv.org/abs/2601.03515" class="pub-title">Mem-Gallery: Benchmarking Multimodal Long-Term Conversational Memory for MLLM Agents</a>
-        <div class="pub-authors">Yuanchen Bei, <span class="me">Tianxin Wei</span>, Xuying Ning, Yanjun Zhao, Zhining Liu, Xiao Lin, Yada Zhu, Hendrik Hamann, Jingrui He, Hanghang Tong</div>
         <div class="pub-venue"><em>ACL 2026 Main Conference</em></div>
-        <div class="pub-links"><a href="https://github.com/YuanchenBei/Mem-Gallery" class="pub-link">Code</a></div>
+        <div class="pub-authors">Yuanchen Bei, <span class="me">Tianxin Wei</span>, Xuying Ning, Yanjun Zhao, Zhining Liu, Xiao Lin, Yada Zhu, Hendrik Hamann, Jingrui He, Hanghang Tong</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Benchmark exposing MLLM agents' failure in long-term multimodal conversational memory.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2601.03515" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/YuanchenBei/Mem-Gallery" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
         <div class="pub-tags"><span class="tag tag-agent">Agent</span><span class="tag tag-multimodal">Multimodal</span><span class="tag tag-personalization">Personalization</span></div>
       </li>
 
-      <li class="pub-item">
+      <li class="pub-item" data-tags="llm safety">
         <a href="https://arxiv.org/abs/2601.03600" class="pub-title">ALERT: Zero-shot LLM Jailbreak Detection via Internal Discrepancy Amplification</a>
-        <div class="pub-authors">Xiao Lin, Philip Li, Zhichen Zeng, Ting-Wei Li, <span class="me">Tianxin Wei</span>, Xuying Ning, Gaotang Li, Yuzhong Chen, Hanghang Tong</div>
         <div class="pub-venue"><em>ACL 2026 Findings</em></div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
+        <div class="pub-authors">Xiao Lin, Philip Li, Zhichen Zeng, Ting-Wei Li, <span class="me">Tianxin Wei</span>, Xuying Ning, Gaotang Li, Yuzhong Chen, Hanghang Tong</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Zero-shot jailbreak detection by amplifying internal safety-generation discrepancies.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2601.03600" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
         <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-safety">Safety</span></div>
       </li>
 
-      <li class="pub-item">
+      <li class="pub-item" data-tags="agent multimodal robustness">
         <a href="https://arxiv.org/abs/2603.00873" class="pub-title">MC-Search: Evaluating and Enhancing Multimodal Agentic Search with Structured Long Reasoning Chains</a>
-        <div class="pub-authors">Xuying Ning*, Dongqi Fu*, <span class="me">Tianxin Wei*</span>, Mengting Ai, Jiaru Zou, Ting-Wei Li, Hanghang Tong, Yada Zhu, Hendrik Hamann, Jingrui He</div>
         <div class="pub-venue"><em>ICLR 2026</em> <span class="oral">Oral (Top 1%)</span>. Prelim version at NeurIPS 2025 Workshop.</div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
+        <div class="pub-authors">Xuying Ning*, Dongqi Fu*, <span class="me">Tianxin Wei*</span>, Mengting Ai, Jiaru Zou, Ting-Wei Li, Hanghang Tong, Yada Zhu, Hendrik Hamann, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Structured long reasoning chains for multimodal agentic search.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2603.00873" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
         <div class="pub-tags"><span class="tag tag-agent">Agent</span><span class="tag tag-multimodal">Multimodal</span><span class="tag tag-robustness">Robustness</span></div>
       </li>
 
-      <li class="pub-item">
+      <li class="pub-item" data-tags="multimodal robustness">
         <a href="https://arxiv.org/abs/2510.17771" class="pub-title">Seeing but Not Believing: Probing the Disconnect Between Visual Attention and Answer Correctness in VLMs</a>
-        <div class="pub-authors">Zhining Liu, Ziyi Chen, Hui Liu, Chen Luo, Xianfeng Tang, Suhang Wang, Joy Zeng, Zhenwei Dai, Zhan Shi, <span class="me">Tianxin Wei</span>, Benoit Dumoulin, Hanghang Tong</div>
         <div class="pub-venue"><em>ICLR 2026</em></div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
+        <div class="pub-authors">Zhining Liu, Ziyi Chen, Hui Liu, Chen Luo, Xianfeng Tang, Suhang Wang, Joy Zeng, Zhenwei Dai, Zhan Shi, <span class="me">Tianxin Wei</span>, Benoit Dumoulin, Hanghang Tong</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Correct visual attention does not guarantee correct VLM reasoning.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2510.17771" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
         <div class="pub-tags"><span class="tag tag-multimodal">Multimodal</span><span class="tag tag-robustness">Robustness</span></div>
       </li>
 
-      <li class="pub-item">
+      <li class="pub-item" data-tags="llm multi-agent">
         <a href="https://arxiv.org/abs/2510.13855" class="pub-title">Harnessing Consistency for Robust Test-Time LLM Ensemble</a>
-        <div class="pub-authors">Zhichen Zeng, Qi Yu, Xiao Lin, Ruizhong Qiu, Xuying Ning, <span class="me">Tianxin Wei</span>, Yuchen Yan, Jingrui He, Hanghang Tong</div>
         <div class="pub-venue"><em>EACL 2026 Findings</em></div>
-        <div class="pub-links"><a href="https://github.com/zhichenz98/CoRE-EACL26" class="pub-link">Code</a></div>
+        <div class="pub-authors">Zhichen Zeng, Qi Yu, Xiao Lin, Ruizhong Qiu, Xuying Ning, <span class="me">Tianxin Wei</span>, Yuchen Yan, Jingrui He, Hanghang Tong</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Consistency-driven test-time LLM ensemble for robust multi-model agreement.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2510.13855" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/zhichenz98/CoRE-EACL26" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
         <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-multi-agent">Multi-Agent</span></div>
       </li>
 
-      <li class="pub-item">
+      <li class="pub-item" data-tags="multimodal test-time personalization robustness">
         <a href="https://arxiv.org/abs/2511.10481" class="pub-title">Panda: Test-Time Adaptation with Negative Data Augmentation</a>
-        <div class="pub-authors">Ruxi Deng, Wenxuan Bao, <span class="me">Tianxin Wei</span>, Jingrui He</div>
         <div class="pub-venue"><em>AAAI 2026</em></div>
-        <div class="pub-links"><a href="https://github.com/ruxideng/Panda" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-multimodal">Multimodal</span><span class="tag tag-test-time">Test-time</span><span class="tag tag-personalization">Personalization</span><span class="tag tag-robustness">Robustness</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://arxiv.org/abs/2505.17451" class="pub-title">CLIMB: Class-imbalanced Learning Benchmark on Tabular Data</a>
-        <div class="pub-authors">Zhining Liu, Zihao Li, Ze Yang, <span class="me">Tianxin Wei</span>, Jian Kang, Yada Zhu, Hendrik Hamann, Jingrui He, Hanghang Tong</div>
-        <div class="pub-venue"><em>NeurIPS 2025</em></div>
-        <div class="pub-links"><a href="https://github.com/ZhiningLiu1998/imbalanced-ensemble" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-robustness">Robustness</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://arxiv.org/abs/2507.21494" class="pub-title">Latte: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning</a>
-        <div class="pub-authors">Wenxuan Bao, Ruxi Deng, Ruizhong Qiu, <span class="me">Tianxin Wei</span>, Hanghang Tong, Jingrui He</div>
-        <div class="pub-venue"><em>ICCV 2025</em></div>
-        <div class="pub-links"><a href="https://github.com/baowenxuan/Latte" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-multimodal">Multimodal</span><span class="tag tag-test-time">Test-time</span><span class="tag tag-personalization">Personalization</span><span class="tag tag-robustness">Robustness</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://aclanthology.org/2025.findings-emnlp.407" class="pub-title">Learning to Instruct: Fine-Tuning a Task-Aware Instruction Optimizer for Black-Box LLMs</a>
-        <div class="pub-authors">Yunzhe Qi, Jinjin Tian, Tianci Liu, Ruirui Li, <span class="me">Tianxin Wei</span>, Hui Liu, Xianfeng Tang, Monica Xiao Cheng, Jingrui He</div>
-        <div class="pub-venue"><em>EMNLP 2025 Findings</em></div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-llm">LLM</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://arxiv.org/abs/2502.08767" class="pub-title">SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence</a>
-        <div class="pub-authors">Zhining Liu, Rana Ali Amjad, Ravinarayana Adkathimar, <span class="me">Tianxin Wei</span>, Hanghang Tong</div>
-        <div class="pub-venue"><em>ACL 2025 Main</em></div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-retrieval">Retrieval</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://arxiv.org/abs/2405.20710" class="pub-title">i&sup2;VAE: Interest Information Augmentation with Variational Regularizers for Cross-Domain Sequential Recommendation</a>
-        <div class="pub-authors">Xuying Ning, Wujiang Xu, <span class="me">Tianxin Wei</span>, Xiaolei Liu</div>
-        <div class="pub-venue"><em>UAI 2025</em></div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-personalization">Personalization</span><span class="tag tag-robustness">Robustness</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://openreview.net/forum?id=FB2e8PV6qg" class="pub-title">Graph4MM: Weaving Multimodal Learning with Structural Information</a>
-        <div class="pub-authors">Xuying Ning, Dongqi Fu, <span class="me">Tianxin Wei</span>, Wujiang Xu, Jingrui He</div>
-        <div class="pub-venue"><em>ICML 2025</em></div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-multimodal">Multimodal</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://arxiv.org/abs/2505.18442" class="pub-title">Breaking Silos: Adaptive Model Fusion Unlocks Better Time Series Forecasting</a>
-        <div class="pub-authors">Zhining Liu, Ze Yang, Xiao Lin, Ruizhong Qiu, <span class="me">Tianxin Wei</span>, Yada Zhu, Hendrik Hamann, Jingrui He, Hanghang Tong</div>
-        <div class="pub-venue"><em>ICML 2025</em></div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-application">Application</span><span class="tag tag-efficiency">Efficiency</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="TBD" class="pub-title">Connecting Domains and Contrasting Samples: A Ladder for Domain Generalization</a>
-        <div class="pub-authors"><span class="me">Tianxin Wei*</span>, Yifan Chen*, Wenxuan Bao, Jingrui He</div>
-        <div class="pub-venue"><em>KDD 2025</em> (Full Research, AR: 19%)</div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-robustness">Robustness</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://arxiv.org/abs/2307.08941" class="pub-title">MLP Fusion: Towards Efficient Fine-tuning of Dense and Mixture-of-Experts Language Models</a>
-        <div class="pub-authors">Mengting Ai*, <span class="me">Tianxin Wei*</span>, Yifan Chen*, Zeming Guo, Jingrui He</div>
-        <div class="pub-venue"><em>v1 accepted to ICML 2023. Submitted to IEEE for possible publication.</em></div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-efficiency">Efficiency</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="TBD" class="pub-title">ResMoE: Space-efficient Compression of Mixture of Experts LLMs via Residual Restoration</a>
-        <div class="pub-authors">Mengting Ai*, <span class="me">Tianxin Wei*^</span>, Yifan Chen*, Zhichen Zeng, Ritchie Zhao, Girish Varatkar, Bita Darvish Rouhani, Xianfeng Tang, Hanghang Tong, Jingrui He</div>
-        <div class="pub-venue"><em>KDD 2025</em> (Full Research, AR: 19%)</div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-efficiency">Efficiency</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://arxiv.org/abs/2201.13395" class="pub-title">Meta Clustering of Neural Bandits</a>
-        <div class="pub-authors">Yikun Ban, Yunzhe Qi, <span class="me">Tianxin Wei</span>, Lihui Liu, Jingrui He</div>
-        <div class="pub-venue"><em>KDD 2024</em> (Full Research, AR: 20%)</div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-efficiency">Efficiency</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="TBD" class="pub-title">Graph Mixup on Approximate Gromov-Wasserstein Geodesics</a>
-        <div class="pub-authors">Zhichen Zeng, Ruizhong Qiu, Zhe Xu, Zhining Liu, Yuchen Yan, <span class="me">Tianxin Wei</span>, Lei Ying, Jingrui He, Hanghang Tong</div>
-        <div class="pub-venue"><em>ICML 2024</em> (Full Research, AR: 27.5%)</div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-robustness">Robustness</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://arxiv.org/pdf/2310.07815v1.pdf" class="pub-title">Language Models as Semantic Indexers</a>
-        <div class="pub-authors">Bowen Jin, Hansi Zeng, Guoyin Wang, Xiusi Chen, <span class="me">Tianxin Wei</span>, Ruirui Li, Zhengyang Wang, Zheng Li, Yang Li, Hanqing Lu, Suhang Wang, Jiawei Han, Xianfeng Tang</div>
-        <div class="pub-venue"><em>ICML 2024</em> (Full Research, AR: 27.5%)</div>
-        <div class="pub-links"><a href="https://github.com/petergriffinjin/lmindexer" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-retrieval">Retrieval</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://openreview.net/pdf?id=khAE1sTMdX" class="pub-title">Towards Unified Multi-Modal Personalization: Large Vision-Language Models for Generative Recommendation and Beyond</a>
-        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Bowen Jin, Ruirui Li, Hansi Zeng, Zhengyang Wang, Jianhui Sun, Qingyu Yin, Hanqing Lu, Suhang Wang, Jingrui He, Xianfeng Tang</div>
-        <div class="pub-venue"><em>ICLR 2024</em> (Full Research, AR: 31%)</div>
-        <div class="pub-links"><a href="https://github.com/weitianxin/UniMP" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-multimodal">Multimodal</span><span class="tag tag-personalization">Personalization</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://arxiv.org/pdf/2311.09134.pdf" class="pub-title">Scalable and Effective Generative Information Retrieval</a>
-        <div class="pub-authors">Hansi Zeng, Chen Luo, Bowen Jin, Sheikh Muhammad Sarwar, <span class="me">Tianxin Wei</span>, Hamed Zamani</div>
-        <div class="pub-venue"><em>WWW 2024</em> <span class="oral">(Oral)</span> (Full Research, AR: 20.2%)</div>
-        <div class="pub-links"><a href="https://github.com/hansizeng/ripor" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-retrieval">Retrieval</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="TBD" class="pub-title">TAU: Trajectory Data Augmentation with Uncertainty for Next POI Recommendation</a>
-        <div class="pub-authors">Zhuang Zhuang, <span class="me">Tianxin Wei^</span>, Lingbo Liu, Heng Qi, Yanming Shen, Baocai Yin</div>
-        <div class="pub-venue"><em>AAAI 2024</em> (Full Research, AR: 24%)</div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-robustness">Robustness</span><span class="tag tag-personalization">Personalization</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/c9e6ac15e689e06139d7b39e1667b165-Abstract-Conference.html" class="pub-title">Meta-Learning with Neural Bandit Scheduler</a>
-        <div class="pub-authors">Yunzhe Qi, Yikun Ban, <span class="me">Tianxin Wei</span>, Jiaru Zou, Huaxiu Yao, Jingrui He</div>
-        <div class="pub-venue"><em>NeurIPS 2023</em> (Full Research, AR: 26.1%)</div>
-        <div class="pub-links"><a href="https://github.com/yunzhe0306/bandit_task_scheduler" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-efficiency">Efficiency</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://arxiv.org/abs/2310.18816" class="pub-title">Adaptive Test-Time Personalization for Federated Learning</a>
-        <div class="pub-authors">Wenxuan Bao*, <span class="me">Tianxin Wei*</span>, Haohan Wang, Jingrui He</div>
-        <div class="pub-venue"><em>NeurIPS 2023</em> (Full Research, AR: 26.1%)</div>
-        <div class="pub-links"><a href="https://github.com/baowenxuan/ATP" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-robustness">Robustness</span><span class="tag tag-test-time">Test-time</span><span class="tag tag-personalization">Personalization</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://arxiv.org/abs/2307.08941v2" class="pub-title">NTK-approximating MLP Fusion for Efficient Language Model Fine-tuning</a>
-        <div class="pub-authors"><span class="me">Tianxin Wei*^</span>, Zeming Guo*, Yifan Chen*, Jingrui He</div>
-        <div class="pub-venue"><em>ICML 2023</em> (Full Research, AR: 27.9%)</div>
-        <div class="pub-links"><a href="https://github.com/weitianxin/mlp_fusion" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-efficiency">Efficiency</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://arxiv.org/abs/2210.03801" class="pub-title">Augmentations in Hypergraph Contrastive Learning: Fabricated and Generative</a>
-        <div class="pub-authors"><span class="me">Tianxin Wei*</span>, Yuning You*, Tianlong Chen, Yang Shen, Jingrui He, Zhangyang Wang</div>
-        <div class="pub-venue"><em>NeurIPS 2022</em> (Full Research, AR: 25.6%)</div>
+        <div class="pub-authors">Ruxi Deng, Wenxuan Bao, <span class="me">Tianxin Wei</span>, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Negative data augmentation at test time for robust domain adaptation.</div>
         <div class="pub-links">
-          <a href="https://github.com/weitianxin/HyperGCL" class="pub-link">Code</a>
-          <a href="https://weitianxin.github.io/files/neurips22_hypergcl_appendix.pdf" class="pub-link">Appendix</a>
+          <a href="https://arxiv.org/abs/2511.10481" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/ruxideng/Panda" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-multimodal">Multimodal</span><span class="tag tag-test-time">Test-time</span><span class="tag tag-personalization">Personalization</span><span class="tag tag-robustness">Robustness</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="robustness">
+        <a href="https://arxiv.org/abs/2505.17451" class="pub-title">CLIMB: Class-imbalanced Learning Benchmark on Tabular Data</a>
+        <div class="pub-venue"><em>NeurIPS 2025</em></div>
+        <div class="pub-authors">Zhining Liu, Zihao Li, Ze Yang, <span class="me">Tianxin Wei</span>, Jian Kang, Yada Zhu, Hendrik Hamann, Jingrui He, Hanghang Tong</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Unified benchmark for class-imbalanced tabular learning.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2505.17451" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/ZhiningLiu1998/imbalanced-ensemble" class="pub-link"><i class="fab fa-github"></i> Code</a>
         </div>
         <div class="pub-tags"><span class="tag tag-robustness">Robustness</span></div>
       </li>
 
-      <li class="pub-item">
-        <a href="https://arxiv.org/abs/2206.04789" class="pub-title">Comprehensive Fair Meta-learned Recommender System</a>
-        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Jingrui He</div>
-        <div class="pub-venue"><em>KDD 2022</em> (Full Research, AR: 15.0%)</div>
-        <div class="pub-links"><a href="https://github.com/weitianxin/MACR" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-fairness">Fairness</span><span class="tag tag-personalization">Personalization</span></div>
+      <li class="pub-item" data-tags="multimodal test-time personalization robustness">
+        <a href="https://arxiv.org/abs/2507.21494" class="pub-title">Latte: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning</a>
+        <div class="pub-venue"><em>ICCV 2025</em></div>
+        <div class="pub-authors">Wenxuan Bao, Ruxi Deng, Ruizhong Qiu, <span class="me">Tianxin Wei</span>, Hanghang Tong, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Collaborative test-time VLM adaptation across federated clients without sharing data.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2507.21494" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/baowenxuan/Latte" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-multimodal">Multimodal</span><span class="tag tag-test-time">Test-time</span><span class="tag tag-personalization">Personalization</span><span class="tag tag-robustness">Robustness</span></div>
       </li>
 
-      <li class="pub-item">
-        <a href="https://arxiv.org/abs/2010.15363" class="pub-title">Model-Agnostic Counterfactual Reasoning for Eliminating Popularity Bias in Recommender System</a>
-        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Fuli Feng, Jiawei Chen, Ziwei Wu, Jinfeng Yi, Xiangnan He</div>
-        <div class="pub-venue"><em>KDD 2021</em> (Full Research, AR: 15.4%)</div>
-        <div class="pub-links"><a href="https://github.com/weitianxin/MACR" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-bias">Bias</span><span class="tag tag-personalization">Personalization</span></div>
+      <li class="pub-item" data-tags="llm">
+        <a href="https://aclanthology.org/2025.findings-emnlp.407" class="pub-title">Learning to Instruct: Fine-Tuning a Task-Aware Instruction Optimizer for Black-Box LLMs</a>
+        <div class="pub-venue"><em>EMNLP 2025 Findings</em></div>
+        <div class="pub-authors">Yunzhe Qi, Jinjin Tian, Tianci Liu, Ruirui Li, <span class="me">Tianxin Wei</span>, Hui Liu, Xianfeng Tang, Monica Xiao Cheng, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Auto-rewrite prompts for black-box LLMs via a learned instruction optimizer.</div>
+        <div class="pub-links">
+          <a href="https://aclanthology.org/2025.findings-emnlp.407" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-llm">LLM</span></div>
       </li>
 
-      <li class="pub-item">
-        <a href="https://arxiv.org/abs/2105.06067" class="pub-title">Causal Intervention for Leveraging Popularity Bias in Recommendation</a>
-        <div class="pub-authors">Yang Zhang, Fuli Feng, Xiangnan He, <span class="me">Tianxin Wei</span>, Chonggang Song, Guohui Ling, Yongdong Zhang</div>
-        <div class="pub-venue"><em>SIGIR 2021</em> <span class="best-paper">Best Paper Honorable Mention (1 out of All)</span> (Full Research, AR: 21%)</div>
-        <div class="pub-links"><a href="https://github.com/zyang1580/PDA" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-bias">Bias</span><span class="tag tag-personalization">Personalization</span></div>
+      <li class="pub-item" data-tags="llm retrieval">
+        <a href="https://arxiv.org/abs/2502.08767" class="pub-title">SelfElicit: Your Language Model Secretly Knows Where is the Relevant Evidence</a>
+        <div class="pub-venue"><em>ACL 2025 Main</em></div>
+        <div class="pub-authors">Zhining Liu, Rana Ali Amjad, Ravinarayana Adkathimar, <span class="me">Tianxin Wei</span>, Hanghang Tong</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> LLMs implicitly know where evidence is; self-eliciting beats external retrievers.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2502.08767" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-retrieval">Retrieval</span></div>
       </li>
 
-      <li class="pub-item">
-        <a href="https://weitianxin.github.io/files/ICDM_2020_MetaCF.pdf" class="pub-title">Fast Adaptation for Cold-start Collaborative Filtering with Meta-learning</a>
-        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Ziwei Wu, Ruirui Li, Ziniu Hu, Fuli Feng, Xiangnan He, Yizhou Sun, Wei Wang</div>
-        <div class="pub-venue"><em>ICDM 2020</em> (Full Research, AR: 9.8%)</div>
-        <div class="pub-links"><a href="https://drive.google.com/file/d/1_UaPcCQLaEEWUCsMTRIgsvtWqorqsnUm/view?usp=sharing" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-transferability">Transferability</span><span class="tag tag-personalization">Personalization</span></div>
+      <li class="pub-item" data-tags="personalization robustness">
+        <a href="https://arxiv.org/abs/2405.20710" class="pub-title">i&sup2;VAE: Interest Information Augmentation with Variational Regularizers for Cross-Domain Sequential Recommendation</a>
+        <div class="pub-venue"><em>UAI 2025</em></div>
+        <div class="pub-authors">Xuying Ning, Wujiang Xu, <span class="me">Tianxin Wei</span>, Xiaolei Liu</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Variational interest augmentation for cross-domain sequential recommendation.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2405.20710" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-personalization">Personalization</span><span class="tag tag-robustness">Robustness</span></div>
       </li>
 
-      <li class="pub-item">
-        <a href="https://www.springerprofessional.de/en/unpaired-multimodal-neural-machine-translation-via-reinforcement/19040758" class="pub-title">Unpaired Multimodal Neural Machine Translation via Reinforcement Learning</a>
-        <div class="pub-authors">Yijun Wang*, <span class="me">Tianxin Wei*</span>, Qi Liu, Enhong Chen</div>
-        <div class="pub-venue"><em>DASFAA 2021</em> (Full Research, AR: 20%)</div>
-        <div class="pub-tags"><span class="tag tag-multimodal">Multimodal</span></div>
+      <li class="pub-item" data-tags="llm multimodal">
+        <a href="https://openreview.net/forum?id=FB2e8PV6qg" class="pub-title">Graph4MM: Weaving Multimodal Learning with Structural Information</a>
+        <div class="pub-venue"><em>ICML 2025</em></div>
+        <div class="pub-authors">Xuying Ning, Dongqi Fu, <span class="me">Tianxin Wei</span>, Wujiang Xu, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Graph structure as inductive bias for richer multimodal representations.</div>
+        <div class="pub-links">
+          <a href="https://openreview.net/forum?id=FB2e8PV6qg" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-multimodal">Multimodal</span></div>
       </li>
 
-      <li class="pub-item">
-        <a href="https://weitianxin.github.io/files/AAAI21_ARStock.pdf" class="pub-title">AR-Stock: Deep Augmented Relational Stock Prediction</a>
-        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Yuning You, Tianlong Chen</div>
-        <div class="pub-venue"><em>AAAI 2021 Workshop on Knowledge Discovery from Unstructured Data</em> (Oral)</div>
-        <div class="pub-links"><a href="https://github.com/weitianxin/FiAI_AR-Stock" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-application">Application</span></div>
+      <li class="pub-item" data-tags="application efficiency">
+        <a href="https://arxiv.org/abs/2505.18442" class="pub-title">Breaking Silos: Adaptive Model Fusion Unlocks Better Time Series Forecasting</a>
+        <div class="pub-venue"><em>ICML 2025</em></div>
+        <div class="pub-authors">Zhining Liu, Ze Yang, Xiao Lin, Ruizhong Qiu, <span class="me">Tianxin Wei</span>, Yada Zhu, Hendrik Hamann, Jingrui He, Hanghang Tong</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Adaptive fusion of heterogeneous time series forecasters breaks model silos.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2505.18442" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-application">Application</span><span class="tag tag-efficiency">Efficiency</span></div>
       </li>
 
-    </ul>
-
-    <div class="section-subtitle">Journal</div>
-
-    <ul class="pub-list">
-      <li class="pub-item">
-        <a href="TBD" class="pub-title">DiffKGW: Stealthy and Robust Diffusion Model Watermarking</a>
-        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Ruizhong Qiu, Yifan Chen, Yunzhe Qi, Jiacheng Lin, Wenxuan Bao, Wenju Xu, Sreyashi Nag, Ruirui Li, Hanqing Lu, Zhengyang Wang, Chen Luo, Hui Liu, Suhang Wang, Jingrui He, Qi He, Xianfeng Tang</div>
-        <div class="pub-venue"><em>TMLR</em></div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
-        <div class="pub-tags"><span class="tag tag-diffusion">Diffusion</span><span class="tag tag-robustness">Robustness</span></div>
-      </li>
-
-      <li class="pub-item">
-        <a href="https://arxiv.org/abs/2505.12709" class="pub-title">Pave Your Own Path: Graph Gradual Domain Adaptation on Fused Gromov-Wasserstein Geodesics</a>
-        <div class="pub-authors">Zhichen Zeng, Ruizhong Qiu, Wenxuan Bao, <span class="me">Tianxin Wei</span>, Xiao Lin, Yuchen Yan, Tarek F. Abdelzaher, Jiawei Han, Hanghang Tong</div>
-        <div class="pub-venue"><em>TMLR</em></div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
+      <li class="pub-item" data-tags="robustness">
+        <a href="TBD" class="pub-title">Connecting Domains and Contrasting Samples: A Ladder for Domain Generalization</a>
+        <div class="pub-venue"><em>KDD 2025</em> (Full Research, AR: 19%)</div>
+        <div class="pub-authors"><span class="me">Tianxin Wei*</span>, Yifan Chen*, Wenxuan Bao, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Progressive domain connection via contrastive alignment for domain generalization.</div>
+        <div class="pub-links">
+          <a href="TBD" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
         <div class="pub-tags"><span class="tag tag-robustness">Robustness</span></div>
       </li>
 
-      <li class="pub-item">
+      <li class="pub-item" data-tags="llm efficiency">
+        <a href="https://arxiv.org/abs/2307.08941" class="pub-title">MLP Fusion: Towards Efficient Fine-tuning of Dense and Mixture-of-Experts Language Models</a>
+        <div class="pub-venue"><em>v1 accepted to ICML 2023. Submitted to IEEE for possible publication.</em></div>
+        <div class="pub-authors">Mengting Ai*, <span class="me">Tianxin Wei*</span>, Yifan Chen*, Zeming Guo, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Lightweight MLP fusion for parameter-efficient fine-tuning of dense and MoE LLMs.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2307.08941" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-efficiency">Efficiency</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="llm efficiency">
+        <a href="TBD" class="pub-title">ResMoE: Space-efficient Compression of Mixture of Experts LLMs via Residual Restoration</a>
+        <div class="pub-venue"><em>KDD 2025</em> (Full Research, AR: 19%)</div>
+        <div class="pub-authors">Mengting Ai*, <span class="me">Tianxin Wei*^</span>, Yifan Chen*, Zhichen Zeng, Ritchie Zhao, Girish Varatkar, Bita Darvish Rouhani, Xianfeng Tang, Hanghang Tong, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Residual restoration compresses MoE LLMs while preserving expert specialization.</div>
+        <div class="pub-links">
+          <a href="TBD" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-efficiency">Efficiency</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="efficiency">
+        <a href="https://arxiv.org/abs/2201.13395" class="pub-title">Meta Clustering of Neural Bandits</a>
+        <div class="pub-venue"><em>KDD 2024</em> (Full Research, AR: 20%)</div>
+        <div class="pub-authors">Yikun Ban, Yunzhe Qi, <span class="me">Tianxin Wei</span>, Lihui Liu, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Meta-learning discovers bandit arm clusters for efficient shared exploration.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2201.13395" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-efficiency">Efficiency</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="robustness">
+        <a href="TBD" class="pub-title">Graph Mixup on Approximate Gromov-Wasserstein Geodesics</a>
+        <div class="pub-venue"><em>ICML 2024</em> (Full Research, AR: 27.5%)</div>
+        <div class="pub-authors">Zhichen Zeng, Ruizhong Qiu, Zhe Xu, Zhining Liu, Yuchen Yan, <span class="me">Tianxin Wei</span>, Lei Ying, Jingrui He, Hanghang Tong</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Graph mixup along Gromov-Wasserstein geodesics for topology-aware augmentation.</div>
+        <div class="pub-links">
+          <a href="TBD" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-robustness">Robustness</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="llm retrieval">
+        <a href="https://arxiv.org/pdf/2310.07815v1.pdf" class="pub-title">Language Models as Semantic Indexers</a>
+        <div class="pub-venue"><em>ICML 2024</em> (Full Research, AR: 27.5%)</div>
+        <div class="pub-authors">Bowen Jin, Hansi Zeng, Guoyin Wang, Xiusi Chen, <span class="me">Tianxin Wei</span>, Ruirui Li, Zhengyang Wang, Zheng Li, Yang Li, Hanqing Lu, Suhang Wang, Jiawei Han, Xianfeng Tang</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Language models as end-to-end semantic indexers replacing traditional retrieval.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/pdf/2310.07815v1.pdf" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/petergriffinjin/lmindexer" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-retrieval">Retrieval</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="llm multimodal personalization">
+        <a href="https://openreview.net/pdf?id=khAE1sTMdX" class="pub-title">Towards Unified Multi-Modal Personalization: Large Vision-Language Models for Generative Recommendation and Beyond</a>
+        <div class="pub-venue"><em>ICLR 2024</em> (Full Research, AR: 31%)</div>
+        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Bowen Jin, Ruirui Li, Hansi Zeng, Zhengyang Wang, Jianhui Sun, Qingyu Yin, Hanqing Lu, Suhang Wang, Jingrui He, Xianfeng Tang</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> One vision-language model for unified multi-modal generative recommendation.</div>
+        <div class="pub-links">
+          <a href="https://openreview.net/pdf?id=khAE1sTMdX" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/weitianxin/UniMP" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-multimodal">Multimodal</span><span class="tag tag-personalization">Personalization</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="llm retrieval">
+        <a href="https://arxiv.org/pdf/2311.09134.pdf" class="pub-title">Scalable and Effective Generative Information Retrieval</a>
+        <div class="pub-venue"><em>WWW 2024</em> <span class="oral">(Oral)</span> (Full Research, AR: 20.2%)</div>
+        <div class="pub-authors">Hansi Zeng, Chen Luo, Bowen Jin, Sheikh Muhammad Sarwar, <span class="me">Tianxin Wei</span>, Hamed Zamani</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Scalable generative retrieval via residual-quantized prefix language modeling.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/pdf/2311.09134.pdf" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/hansizeng/ripor" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-retrieval">Retrieval</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="robustness personalization">
+        <a href="TBD" class="pub-title">TAU: Trajectory Data Augmentation with Uncertainty for Next POI Recommendation</a>
+        <div class="pub-venue"><em>AAAI 2024</em> (Full Research, AR: 24%)</div>
+        <div class="pub-authors">Zhuang Zhuang, <span class="me">Tianxin Wei^</span>, Lingbo Liu, Heng Qi, Yanming Shen, Baocai Yin</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Uncertainty-aware trajectory augmentation for next POI recommendation.</div>
+        <div class="pub-links">
+          <a href="TBD" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-robustness">Robustness</span><span class="tag tag-personalization">Personalization</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="efficiency">
+        <a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/c9e6ac15e689e06139d7b39e1667b165-Abstract-Conference.html" class="pub-title">Meta-Learning with Neural Bandit Scheduler</a>
+        <div class="pub-venue"><em>NeurIPS 2023</em> (Full Research, AR: 26.1%)</div>
+        <div class="pub-authors">Yunzhe Qi, Yikun Ban, <span class="me">Tianxin Wei</span>, Jiaru Zou, Huaxiu Yao, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Neural bandit scheduling for adaptive task allocation in meta-learning.</div>
+        <div class="pub-links">
+          <a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/c9e6ac15e689e06139d7b39e1667b165-Abstract-Conference.html" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/yunzhe0306/bandit_task_scheduler" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-efficiency">Efficiency</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="robustness test-time personalization">
+        <a href="https://arxiv.org/abs/2310.18816" class="pub-title">Adaptive Test-Time Personalization for Federated Learning</a>
+        <div class="pub-venue"><em>NeurIPS 2023</em> (Full Research, AR: 26.1%)</div>
+        <div class="pub-authors">Wenxuan Bao*, <span class="me">Tianxin Wei*</span>, Haohan Wang, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Test-time personalization bridging global federated models to local distributions.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2310.18816" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/baowenxuan/ATP" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-robustness">Robustness</span><span class="tag tag-test-time">Test-time</span><span class="tag tag-personalization">Personalization</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="llm efficiency">
+        <a href="https://arxiv.org/abs/2307.08941v2" class="pub-title">NTK-approximating MLP Fusion for Efficient Language Model Fine-tuning</a>
+        <div class="pub-venue"><em>ICML 2023</em> (Full Research, AR: 27.9%)</div>
+        <div class="pub-authors"><span class="me">Tianxin Wei*^</span>, Zeming Guo*, Yifan Chen*, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> NTK-principled MLP fusion for theoretically grounded efficient LLM fine-tuning.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2307.08941v2" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/weitianxin/mlp_fusion" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-llm">LLM</span><span class="tag tag-efficiency">Efficiency</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="robustness">
+        <a href="https://arxiv.org/abs/2210.03801" class="pub-title">Augmentations in Hypergraph Contrastive Learning: Fabricated and Generative</a>
+        <div class="pub-venue"><em>NeurIPS 2022</em> (Full Research, AR: 25.6%)</div>
+        <div class="pub-authors"><span class="me">Tianxin Wei*</span>, Yuning You*, Tianlong Chen, Yang Shen, Jingrui He, Zhangyang Wang</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Fabricated and generative augmentations for hypergraph contrastive learning.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2210.03801" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/weitianxin/HyperGCL" class="pub-link"><i class="fab fa-github"></i> Code</a>
+          <a href="https://weitianxin.github.io/files/neurips22_hypergcl_appendix.pdf" class="pub-link"><i class="fas fa-paperclip"></i> Appendix</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-robustness">Robustness</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="fairness personalization">
+        <a href="https://arxiv.org/abs/2206.04789" class="pub-title">Comprehensive Fair Meta-learned Recommender System</a>
+        <div class="pub-venue"><em>KDD 2022</em> (Full Research, AR: 15.0%)</div>
+        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Meta-learned recommendation with built-in fairness across user demographics.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2206.04789" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/weitianxin/MACR" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-fairness">Fairness</span><span class="tag tag-personalization">Personalization</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="bias personalization">
+        <a href="https://arxiv.org/abs/2010.15363" class="pub-title">Model-Agnostic Counterfactual Reasoning for Eliminating Popularity Bias in Recommender System</a>
+        <div class="pub-venue"><em>KDD 2021</em> (Full Research, AR: 15.4%)</div>
+        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Fuli Feng, Jiawei Chen, Ziwei Wu, Jinfeng Yi, Xiangnan He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Counterfactual reasoning removes popularity bias from any recommender.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2010.15363" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/weitianxin/MACR" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-bias">Bias</span><span class="tag tag-personalization">Personalization</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="bias personalization">
+        <a href="https://arxiv.org/abs/2105.06067" class="pub-title">Causal Intervention for Leveraging Popularity Bias in Recommendation</a>
+        <div class="pub-venue"><em>SIGIR 2021</em> <span class="best-paper">Best Paper Honorable Mention (1 out of All)</span> (Full Research, AR: 21%)</div>
+        <div class="pub-authors">Yang Zhang, Fuli Feng, Xiangnan He, <span class="me">Tianxin Wei</span>, Chonggang Song, Guohui Ling, Yongdong Zhang</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Causal intervention that leverages popularity signals while suppressing recommendation bias.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2105.06067" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/zyang1580/PDA" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-bias">Bias</span><span class="tag tag-personalization">Personalization</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="transferability personalization">
+        <a href="https://weitianxin.github.io/files/ICDM_2020_MetaCF.pdf" class="pub-title">Fast Adaptation for Cold-start Collaborative Filtering with Meta-learning</a>
+        <div class="pub-venue"><em>ICDM 2020</em> (Full Research, AR: 9.8%)</div>
+        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Ziwei Wu, Ruirui Li, Ziniu Hu, Fuli Feng, Xiangnan He, Yizhou Sun, Wei Wang</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Meta-learning for rapid cold-start adaptation from few user interactions.</div>
+        <div class="pub-links">
+          <a href="https://weitianxin.github.io/files/ICDM_2020_MetaCF.pdf" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://drive.google.com/file/d/1_UaPcCQLaEEWUCsMTRIgsvtWqorqsnUm/view?usp=sharing" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-transferability">Transferability</span><span class="tag tag-personalization">Personalization</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="multimodal">
+        <a href="https://www.springerprofessional.de/en/unpaired-multimodal-neural-machine-translation-via-reinforcement/19040758" class="pub-title">Unpaired Multimodal Neural Machine Translation via Reinforcement Learning</a>
+        <div class="pub-venue"><em>DASFAA 2021</em> (Full Research, AR: 20%)</div>
+        <div class="pub-authors">Yijun Wang*, <span class="me">Tianxin Wei*</span>, Qi Liu, Enhong Chen</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> RL-based alignment of unpaired images and text for multimodal translation.</div>
+        <div class="pub-links">
+          <a href="https://www.springerprofessional.de/en/unpaired-multimodal-neural-machine-translation-via-reinforcement/19040758" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-multimodal">Multimodal</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="application">
+        <a href="https://weitianxin.github.io/files/AAAI21_ARStock.pdf" class="pub-title">AR-Stock: Deep Augmented Relational Stock Prediction</a>
+        <div class="pub-venue"><em>AAAI 2021 Workshop on Knowledge Discovery from Unstructured Data</em> (Oral)</div>
+        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Yuning You, Tianlong Chen</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Augmented relational graph learning capturing inter-stock market dynamics.</div>
+        <div class="pub-links">
+          <a href="https://weitianxin.github.io/files/AAAI21_ARStock.pdf" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/weitianxin/FiAI_AR-Stock" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-application">Application</span></div>
+      </li>
+<li class="pub-item" data-tags="diffusion robustness">
+        <a href="TBD" class="pub-title">DiffKGW: Stealthy and Robust Diffusion Model Watermarking</a>
+        <div class="pub-venue"><em>TMLR</em></div>
+        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Ruizhong Qiu, Yifan Chen, Yunzhe Qi, Jiacheng Lin, Wenxuan Bao, Wenju Xu, Sreyashi Nag, Ruirui Li, Hanqing Lu, Zhengyang Wang, Chen Luo, Hui Liu, Suhang Wang, Jingrui He, Qi He, Xianfeng Tang</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Stealthy, robust watermarking for diffusion models via generation-time intervention.</div>
+        <div class="pub-links">
+          <a href="TBD" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-diffusion">Diffusion</span><span class="tag tag-robustness">Robustness</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="robustness">
+        <a href="https://arxiv.org/abs/2505.12709" class="pub-title">Pave Your Own Path: Graph Gradual Domain Adaptation on Fused Gromov-Wasserstein Geodesics</a>
+        <div class="pub-venue"><em>TMLR</em></div>
+        <div class="pub-authors">Zhichen Zeng, Ruizhong Qiu, Wenxuan Bao, <span class="me">Tianxin Wei</span>, Xiao Lin, Yuchen Yan, Tarek F. Abdelzaher, Jiawei Han, Hanghang Tong</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Gradual graph domain adaptation along fused Gromov-Wasserstein geodesics.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2505.12709" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-robustness">Robustness</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="survey application">
         <a href="https://arxiv.org/abs/2507.17731" class="pub-title">Flow Matching Meets Biology and Life Science: A Survey</a>
-        <div class="pub-authors">Zihao Li, Zhichen Zeng, Xiao Lin, Feihao Fang, Yanru Qu, Zhe Xu, Zhining Liu, Xuying Ning, <span class="me">Tianxin Wei</span>, Ge Liu, Hanghang Tong, Jingrui He</div>
         <div class="pub-venue"><em>npj Artificial Intelligence</em></div>
-        <div class="pub-links"><a href="TBD" class="pub-link">Code</a></div>
+        <div class="pub-authors">Zihao Li, Zhichen Zeng, Xiao Lin, Feihao Fang, Yanru Qu, Zhe Xu, Zhining Liu, Xuying Ning, <span class="me">Tianxin Wei</span>, Ge Liu, Hanghang Tong, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Survey connecting flow matching to molecular and biological modeling.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2507.17731" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
         <div class="pub-tags"><span class="tag tag-survey">Survey</span><span class="tag tag-application">Application</span></div>
       </li>
 
-      <li class="pub-item">
+      <li class="pub-item" data-tags="survey">
         <a href="http://sites.computer.org/debull/A23june/p80.pdf" class="pub-title">Graph Contrastive Learning: An Odyssey towards Generalizable, Scalable and Principled Representation Learning on Graphs</a>
-        <div class="pub-authors">Yan Han, Yuning You, Wenqing Zheng, Scott Hoang, <span class="me">Tianxin Wei</span>, Majdi Hassan, Tianlong Chen, Ying Ding, Yang Shen, Zhangyang Wang</div>
         <div class="pub-venue"><em>IEEE Data Engineering Bulletin</em></div>
+        <div class="pub-authors">Yan Han, Yuning You, Wenqing Zheng, Scott Hoang, <span class="me">Tianxin Wei</span>, Majdi Hassan, Tianlong Chen, Ying Ding, Yang Shen, Zhangyang Wang</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Roadmap from augmentation design to principled graph contrastive learning.</div>
+        <div class="pub-links">
+          <a href="http://sites.computer.org/debull/A23june/p80.pdf" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+        </div>
         <div class="pub-tags"><span class="tag tag-survey">Survey</span></div>
       </li>
     </ul>
@@ -1371,6 +1599,37 @@
       });
       ticking = true;
     }
+  });
+
+  // Publication tag filter
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const pubItems = document.querySelectorAll('.pub-item');
+
+  // Add counts to buttons
+  filterBtns.forEach(btn => {
+    const filter = btn.dataset.filter;
+    let count;
+    if (filter === 'all') {
+      count = pubItems.length;
+    } else {
+      count = document.querySelectorAll(`.pub-item[data-tags*="${filter}"]`).length;
+    }
+    btn.innerHTML += `<span class="filter-count">(${count})</span>`;
+  });
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      pubItems.forEach(item => {
+        if (filter === 'all' || item.dataset.tags.split(' ').includes(filter)) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
   });
 </script>
 
