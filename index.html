@@ -699,6 +699,17 @@
       transition: opacity 0.3s ease;
     }
 
+    .gallery-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--border);
+      color: #aaa;
+      font-size: 2rem;
+    }
+
     .gallery-item .overlay {
       position: absolute;
       inset: 0;
@@ -1631,6 +1642,9 @@
   <section data-aos="fade-up" data-aos-duration="600">
     <h2 class="section-title">Gallery</h2>
     <div class="photo-gallery" id="photoGallery"></div>
+    <div style="text-align:center;margin-top:16px;">
+      <button id="galleryToggleBtn" style="padding:8px 24px;border:1px solid #ccc;border-radius:20px;background:#fff;cursor:pointer;font-size:0.95rem;color:#555;transition:background 0.2s;">Show more photos</button>
+    </div>
   </section>
 
   <!-- Lightbox -->
@@ -1784,13 +1798,33 @@
 
   const shuffled = shuffle([...galleryImages]);
   const gallery = document.getElementById('photoGallery');
+  const GALLERY_BATCH = 5;
+  let galleryShown = GALLERY_BATCH;
 
-  shuffled.forEach((src, idx) => {
-    const item = document.createElement('div');
-    item.className = 'gallery-item';
-    item.innerHTML = `<img src="${src}" alt="Photo ${idx+1}" loading="lazy"><div class="overlay">&#128269;</div>`;
-    item.addEventListener('click', () => openLightbox(idx));
-    gallery.appendChild(item);
+  function renderGalleryItems() {
+    gallery.innerHTML = '';
+    shuffled.slice(0, galleryShown).forEach((src, idx) => {
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      const thumbSrc = src.replace(/^gallery\//, 'gallery/thumbs/').replace(/\.[^.]+$/, '.jpg');
+      item.innerHTML = `<img src="${thumbSrc}" alt="Photo ${idx+1}" loading="lazy"><div class="overlay">&#128269;</div>`;
+      item.addEventListener('click', () => openLightbox(idx));
+      gallery.appendChild(item);
+    });
+    const btn = document.getElementById('galleryToggleBtn');
+    if (galleryShown >= shuffled.length) {
+      btn.style.display = 'none';
+    } else {
+      btn.style.display = '';
+      btn.textContent = `Load more (${shuffled.length - galleryShown} remaining)`;
+    }
+  }
+
+  renderGalleryItems();
+
+  document.getElementById('galleryToggleBtn').addEventListener('click', () => {
+    galleryShown = Math.min(galleryShown + GALLERY_BATCH, shuffled.length);
+    renderGalleryItems();
   });
 
   // Lightbox
