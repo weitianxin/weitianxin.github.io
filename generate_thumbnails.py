@@ -26,6 +26,6 @@ for src in sorted(GALLERY_DIR.iterdir()):
     print(f"-> {dest.stat().st_size // 1024} KB")
 
 manifest = GALLERY_DIR / "manifest.json"
-manifest.write_text(json.dumps(images, ensure_ascii=False, indent=2))
+manifest.write_text(json.dumps(images, ensure_ascii=False, indent=2), encoding='utf-8')
 print(f"manifest: {len(images)} images -> {manifest}")
 print("done.")
