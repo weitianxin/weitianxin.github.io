@@ -500,6 +500,36 @@
       display: none;
     }
 
+    .pub-load-more-wrap {
+      padding: 16px 12px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pub-load-more-wrap.hidden {
+      display: none;
+    }
+
+    .pub-load-more {
+      padding: 8px 22px;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      background: var(--bg);
+      color: var(--accent);
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.25s ease;
+    }
+
+    .pub-load-more:hover {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(44, 82, 130, 0.12);
+    }
+
     .pub-insight {
       margin-top: 6px;
       font-size: 13.5px;
@@ -1118,7 +1148,80 @@
 
     <ul class="pub-list" id="pubList">
 
-      <li class="pub-section-header">Preprint</li>
+      <li class="pub-section-header">Selected Preprints</li>
+
+      <li class="pub-item" data-tags="agent llm">
+        <a href="TBD" class="pub-title">Evo-Harness: Context-to-Harness Skill Compilation for Self-Evolving Agents</a>
+        <div class="pub-venue"><em>ACL ARR 2026 May Submission</em></div>
+        <div class="pub-authors"><span class="me">Tianxin Wei</span>, Zhan Shi, Minhua Lin, Bing He, Zewen Liu, Yisi Sang, Yuanchen Bei, Xuying Ning, Jiaru Zou, Ting-Wei Li, Xiao Lin, Yanjun Zhao, Chi Wang, Benoit Dumoulin, Dakuo Wang, Jingrui He, Hanqing Lu</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Compiles contextual experience into reusable harness skills for self-evolving agents.</div>
+        <div class="pub-links">
+          <a href="TBD" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-agent">Agent</span><span class="tag tag-llm">LLM</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="agent llm">
+        <a href="https://arxiv.org/abs/2605.18747" class="pub-title">Code as Agent Harness</a>
+        <div class="pub-venue"><em>Preprint 2026</em></div>
+        <div class="pub-authors">Xuying Ning*, Katherine Tieu*, Dongqi Fu*, <span class="me">Tianxin Wei*</span>, Zihao Li*, Yuanchen Bei*, Jiaru Zou, Mengting Ai, Zhining Liu, Ting-Wei Li, Lingjie Chen, Yanjun Zhao, Ke Yang, Bingxuan Li, Cheng Qian, Gaotang Li, Xiao Lin, Zhichen Zeng, Ruizhong Qiu, Sirui Chen, Yifan Sun, Xiyuan Yang, Ruida Wang, Rui Pan, Chenyuan Yang, Dylan Zhang, Liri Fang, Zikun Cui, Yang Cao, Pan Chen, Dorothy Sun, Ren Chen, Mahesh Srinivasan, Nipun Mathur, Yinglong Xia, Hong Li, Hong Yan, Pan Lu, Lingming Zhang, Tong Zhang, Hanghang Tong, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Treats executable code as a harness for agent deployment, evaluation, and improvement.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2605.18747" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://code-as-harness.github.io/code-as-harness-webpage/" class="pub-link"><i class="fas fa-project-diagram"></i> Project</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-agent">Agent</span><span class="tag tag-llm">LLM</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="agent llm retrieval">
+        <a href="TBD" class="pub-title">ReContext: Recursive Evidence Replay as LLM Harness for Long-Context Reasoning</a>
+        <div class="pub-venue"><em>ACL ARR 2026 May Submission</em></div>
+        <div class="pub-authors">Yanjun Zhao*, Ruizhong Qiu*, <span class="me">Tianxin Wei*</span>, Yuanchen Bei, Zhining Liu, Lingjie Chen, Ismini Lourentzou, Hanghang Tong, Jingrui He</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Recursively replays evidence to build an LLM harness for long-context reasoning.</div>
+        <div class="pub-links">
+          <a href="TBD" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-agent">Agent</span><span class="tag tag-llm">LLM</span><span class="tag tag-retrieval">Retrieval</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="agent llm efficiency">
+        <a href="https://arxiv.org/abs/2604.26170" class="pub-title">EvoSelect: Data-Efficient LLM Evolution for Targeted Task Adaptation</a>
+        <div class="pub-venue"><em>COLM 2026 Conference Submission</em></div>
+        <div class="pub-authors">Ting-Wei Li, Sirui Chen, Jiaru Zou, Yingbing Huang, <span class="me">Tianxin Wei</span>, Jingrui He, Hanghang Tong</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Data-efficient LLM evolution for adapting models to targeted tasks.</div>
+        <div class="pub-links">
+          <a href="https://arxiv.org/abs/2604.26170" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-agent">Agent</span><span class="tag tag-llm">LLM</span><span class="tag tag-efficiency">Efficiency</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="agent llm">
+        <a href="TBD" class="pub-title">Adaptive Auto-Harness: Sustained Self-Improvement for Agentic System Deployment on Open-Ended Task Streams</a>
+        <div class="pub-venue"><em>ACL ARR 2026 May Submission</em></div>
+        <div class="pub-authors">Zewen Liu, Zhan Shi, Yisi Sang, Bing He, Minhua Lin, <span class="me">Tianxin Wei</span>, Dakuo Wang, Benoit Dumoulin, Wei Jin, Hanqing Lu</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Sustained self-improvement for agentic systems deployed on open-ended task streams.</div>
+        <div class="pub-links">
+          <a href="TBD" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-agent">Agent</span><span class="tag tag-llm">LLM</span></div>
+      </li>
+
+      <li class="pub-item" data-tags="agent llm">
+        <a href="TBD" class="pub-title">Harness Updating Is Not Harness Benefit: Disentangling Evolution Capabilities in Self-Evolving LLM Agents</a>
+        <div class="pub-venue"><em>ACL ARR 2026 May Submission</em></div>
+        <div class="pub-authors">Minhua Lin, Juncheng Wu, Zijun Wang, Zhan Shi, Yisi Sang, Bing He, Zewen Liu, <span class="me">Tianxin Wei</span>, Zongyu Wu, Zhiwei Zhang, Dakuo Wang, Xiang Zhang, Benoit Dumoulin, Cihang Xie, Yuyin Zhou</div>
+        <div class="pub-insight"><strong>Key Insight:</strong> Separates harness updates from true harness benefit in self-evolving LLM agents.</div>
+        <div class="pub-links">
+          <a href="TBD" class="pub-link"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="TBD" class="pub-link"><i class="fab fa-github"></i> Code</a>
+        </div>
+        <div class="pub-tags"><span class="tag tag-agent">Agent</span><span class="tag tag-llm">LLM</span></div>
+      </li>
 
       <li class="pub-item" data-tags="agent survey">
         <a href="https://arxiv.org/abs/2601.12538" class="pub-title">Agentic Reasoning for Large Language Models: A Survey</a>
@@ -1567,6 +1670,10 @@
         <div class="pub-tags"><span class="tag tag-application">Application</span></div>
       </li>
 
+      <li class="pub-load-more-wrap" id="conferenceLoadMoreWrap">
+        <button class="pub-load-more" id="conferenceLoadMore" type="button">Load more publications</button>
+      </li>
+
       <li class="pub-section-header">Journal</li>
 
       <li class="pub-item" data-tags="diffusion robustness">
@@ -1747,29 +1854,74 @@
   });
 
   const sectionHeaders = document.querySelectorAll('.pub-section-header');
+  const conferenceLoadMoreWrap = document.getElementById('conferenceLoadMoreWrap');
+  const conferenceLoadMore = document.getElementById('conferenceLoadMore');
+  const CONFERENCE_VISIBLE_COUNT = 15;
+  let conferenceExpanded = false;
+
+  function getSectionItems(sectionName) {
+    const items = [];
+    let inSection = false;
+    document.querySelectorAll('#pubList > li').forEach(item => {
+      if (item.classList.contains('pub-section-header')) {
+        inSection = item.textContent.trim() === sectionName;
+        return;
+      }
+      if (inSection && item.classList.contains('pub-item')) {
+        items.push(item);
+      }
+    });
+    return items;
+  }
+
+  const conferenceItems = getSectionItems('Conference');
+  const journalItems = getSectionItems('Journal');
+  const journalHeader = [...sectionHeaders].find(header => header.textContent.trim() === 'Journal');
+
+  function itemMatchesFilter(item, filter) {
+    return filter === 'all' || item.dataset.tags.split(' ').includes(filter);
+  }
+
+  function updatePublications(filter) {
+    pubItems.forEach(item => {
+      const visibleByFilter = itemMatchesFilter(item, filter);
+      item.classList.toggle('hidden', !visibleByFilter);
+    });
+
+    sectionHeaders.forEach(header => {
+      header.classList.toggle('hidden', filter !== 'all');
+    });
+
+    if (filter === 'all' && !conferenceExpanded) {
+      conferenceItems.forEach((item, index) => {
+        if (index >= CONFERENCE_VISIBLE_COUNT) {
+          item.classList.add('hidden');
+        }
+      });
+      journalHeader.classList.add('hidden');
+      journalItems.forEach(item => item.classList.add('hidden'));
+    }
+
+    const remaining = Math.max(conferenceItems.length - CONFERENCE_VISIBLE_COUNT, 0) + journalItems.length;
+    const showLoadMore = filter === 'all' && !conferenceExpanded && remaining > 0;
+    conferenceLoadMoreWrap.classList.toggle('hidden', !showLoadMore);
+    conferenceLoadMore.textContent = `Load more publications (${remaining} more)`;
+  }
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      pubItems.forEach(item => {
-        if (filter === 'all' || item.dataset.tags.split(' ').includes(filter)) {
-          item.classList.remove('hidden');
-        } else {
-          item.classList.add('hidden');
-        }
-      });
-      // Show section headers only when "All" is selected
-      sectionHeaders.forEach(h => {
-        if (filter === 'all') {
-          h.classList.remove('hidden');
-        } else {
-          h.classList.add('hidden');
-        }
-      });
+      updatePublications(btn.dataset.filter);
     });
   });
+
+  conferenceLoadMore.addEventListener('click', () => {
+    conferenceExpanded = true;
+    updatePublications(document.querySelector('.filter-btn.active').dataset.filter);
+  });
+
+  updatePublications('all');
 
   // Photo Gallery
   function shuffle(arr) {
